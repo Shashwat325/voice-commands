@@ -400,7 +400,7 @@ app.post('/api/voice-command', async (req, res) => {
           });
         }
         db.setLastTaskId(taskResult.match.id);
-        const message = await answerFromData(transcript,details);
+        const message = await answerFromData(transcript,taskResult.match);
         return res.json({ type: 'progress_report', task: taskResult.match, message });
       }
 
@@ -534,7 +534,7 @@ app.post('/api/voice-command', async (req, res) => {
       }
 
       const details = executor.getLocationDetails(locationResult.match, projectScope ? projectScope.id : null);
-      const message = await answerFromData(transcript,answer);
+      const message = await answerFromData(transcript,details);
       return res.json({ type: 'location_details', details, message });
     }
 
