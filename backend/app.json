@@ -1,0 +1,113 @@
+{
+  "projects": [
+    {
+      "id": "proj-1",
+      "name": "Sunrise Villa",
+      "description": "",
+      "estimated_cost": 2000,
+      "spent_cost": 0,
+      "completion_deadline": "2026-11-09"
+    },
+    {
+      "id": "proj-2",
+      "name": "Greenfield Office Tower",
+      "description": "",
+      "estimated_cost": 100000,
+      "spent_cost": 0,
+      "completion_deadline": null
+    },
+    {
+      "id": "proj-ff74e878",
+      "name": "Lakshya Villa",
+      "description": "a beach front Resort project located in Goa spanning 4 acres featuring 20 Vilas and the central Clubhouse",
+      "estimated_cost": 0,
+      "spent_cost": 0,
+      "completion_deadline": "2026-09-13"
+    }
+  ],
+  "contractors": [
+    {
+      "id": "con-1",
+      "name": "Ceilingcraft Interiors",
+      "trade": "false-ceiling",
+      "contract_amount": 85000,
+      "contract_period": "3 months"
+    },
+    {
+      "id": "con-2",
+      "name": "AquaFlow Plumbing Co",
+      "trade": "plumbing",
+      "contract_amount": 42000,
+      "contract_period": "2 months"
+    },
+    {
+      "id": "con-3",
+      "name": "BrightSpark Electricals",
+      "trade": "electrical",
+      "contract_amount": 60000,
+      "contract_period": "2 months"
+    },
+    {
+      "id": "con-4",
+      "name": "Prime Painters",
+      "trade": "painting",
+      "contract_amount": 30000,
+      "contract_period": "1 month"
+    },
+    {
+      "id": "con-5",
+      "name": "SteelFrame Carpentry",
+      "trade": "carpentry",
+      "contract_amount": 95000,
+      "contract_period": "4 months"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-1",
+      "project_id": "proj-1",
+      "description": "Crack in wall near staircase",
+      "location": "Staircase landing",
+      "status": "open",
+      "assigned_to": "con-4",
+      "estimated_cost": 4000,
+      "spent_cost": 0,
+      "assigned_date": null,
+      "completion_deadline": "2026-11-19",
+      "created_at": "2026-09-12T11:44:49.905Z",
+      "updated_at": "2026-09-14T04:30:26.097Z",
+      "completed_at": null,
+      "notes": "fill the crack with a design of Spider‑Man"
+    },
+    {
+      "id": "task-2",
+      "project_id": "proj-1",
+      "description": "Leaking pipe under sink",
+      "location": "Kitchen",
+      "status": "in_progress",
+      "assigned_to": "con-2",
+      "estimated_cost": 6000,
+      "spent_cost": 2500,
+      "assigned_date": null,
+      "completion_deadline": "2026-11-13",
+      "created_at": "2026-09-12T11:44:49.907Z",
+      "updated_at": "2026-09-13T07:31:26.794Z",
+      "completed_at": null
+    },
+    {
+      "id": "task-3",
+      "project_id": "proj-2",
+      "description": "Flickering light in lobby",
+      "location": "Ground floor lobby",
+      "status": "open",
+      "assigned_to": "con-1",
+      "estimated_cost": 2500,
+      "spent_cost": 2100,
+      "assigned_date": null,
+      "completion_deadline": null,
+      "created_at": "2026-09-12T11:44:49.907Z",
+      "updated_at": "2026-09-13T02:36:13.133Z",
+      "completed_at": null
+    }
+  ]
+}

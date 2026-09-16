@@ -1,0 +1,485 @@
+:root {
+  --paper: #EDEBE6;
+  --paper-raised: #F7F6F3;
+  --ink: #1C1B19;
+  --ink-soft: #5A564E;
+  --orange: #E8590C;
+  --orange-dark: #C24A08;
+  --blueprint: #1D4E89;
+  --blueprint-soft: #E4ECF5;
+  --green: #3F7D4F;
+  --green-soft: #E4EFE6;
+  --line: #D8D4CB;
+  --radius-sm: 4px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+.app__header {
+  margin-bottom: 28px;
+}
+
+.app__eyebrow {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--orange-dark);
+  letter-spacing: 0.01em;
+}
+
+.app__title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+/* ---------- Voice panel ---------- */
+.voice-panel {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 36px 24px 28px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.mic-button {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: none;
+  background: var(--line);
+  color: var(--ink-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  box-shadow: 0 4px 0 #C7C2B6;
+}
+
+.mic-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.mic-button:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #C7C2B6;
+}
+
+.mic-button:disabled {
+  cursor: not-allowed;
+}
+
+.mic-button--on {
+  background: var(--orange);
+  color: white;
+  box-shadow: 0 4px 0 var(--orange-dark);
+}
+
+.mic-button--active {
+  background: var(--orange-dark);
+}
+
+.mic-button--processing {
+  background: var(--blueprint);
+  box-shadow: 0 4px 0 #143A66;
+}
+
+.mic-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--orange);
+  animation: pulse 1.6s ease-out infinite;
+}
+
+.mic-pulse--delay {
+  animation-delay: 0.5s;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+.voice-panel__hint {
+  margin: 16px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.wake-word-reminder {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--blueprint);
+  font-weight: 600;
+}
+
+.transcript {
+  margin: 18px 0 0;
+  font-size: 18px;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.status-line {
+  margin: 14px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+/* ---------- Confirmation ticket ---------- */
+.ticket {
+  margin-top: 22px;
+  text-align: left;
+  background: white;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--orange);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+}
+
+.ticket__label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--orange-dark);
+  margin-bottom: 6px;
+}
+
+.ticket__summary {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.ticket__voice-hint {
+  margin: 0 0 14px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.ticket__actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn--primary {
+  background: var(--ink);
+  color: white;
+}
+
+.btn--primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+
+/* ---------- Clarification ---------- */
+.clarify {
+  margin-top: 22px;
+  text-align: left;
+  background: var(--blueprint-soft);
+  border-left: 4px solid var(--blueprint);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+}
+
+.clarify__label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blueprint);
+  margin-bottom: 6px;
+}
+
+.clarify__message {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.clarify__list {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+/* ---------- Result lines ---------- */
+.result-line {
+  margin-top: 22px;
+  text-align: left;
+  font-size: 15px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+}
+
+.result-line--success {
+  background: var(--green-soft);
+  border-left: 4px solid var(--green);
+}
+
+.result-line--error {
+  background: #F5E4E0;
+  border-left: 4px solid #B23A2E;
+}
+
+.search-results {
+  text-align: left;
+  margin-top: 4px;
+}
+
+/* ---------- Examples ---------- */
+.examples {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+
+.examples__label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+
+.example-chip {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.example-chip:hover {
+  border-color: var(--blueprint);
+  color: var(--ink);
+}
+
+/* ---------- Details card (contractor/location/project/task reports) ---------- */
+.details-card {
+  margin-top: 22px;
+  text-align: left;
+  background: white;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--blueprint);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+}
+.lang-toggle {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--ink-soft);
+  margin-top: 8px;
+}
+.details-card__title {
+  margin: 0 0 2px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.details-card__subtitle {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.details-card__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 16px;
+  margin: 12px 0;
+}
+
+.details-card__stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.details-card__stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.details-card__stat-label {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.details-card__note {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.details-card__tasklist {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 10px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.details-card__tasklist li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 13px;
+}
+
+/* ---------- Log panel / task list ---------- */
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tab-btn--active {
+  color: var(--ink);
+  border-bottom-color: var(--orange);
+}
+
+.log-panel__title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin: 0 0 14px;
+}
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.task-list__empty {
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.task-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.4s ease;
+}
+
+.task-row--highlight {
+  background: var(--green-soft);
+}
+
+.status-chip {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 3px;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+.status-chip--open {
+  background: #FBE4D2;
+  color: var(--orange-dark);
+}
+
+.status-chip--in_progress {
+  background: var(--blueprint-soft);
+  color: var(--blueprint);
+}
+
+.status-chip--done {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.task-row__body {
+  min-width: 0;
+}
+
+.task-row__desc {
+  margin: 0 0 3px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.task-row__meta {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mic-pulse {
+    animation: none;
+  }
+}
