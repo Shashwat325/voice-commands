@@ -565,8 +565,7 @@ export default function App() {
           {!supported ? 'Voice input needs Chrome or Edge.' : error ? `Mic error: ${error}` : MODE_HINTS[mode]}
         </p>
 
-        {mode !== 'off' && <p className="wake-word-reminder">Wake word: “Hey BuildMate”</p>}
-
+        
         {(interimText || lastTranscript) && <p className="transcript">“{interimText || lastTranscript}”</p>}
 
         {mode === 'processing' && <p className="status-line">Thinking…</p>}
@@ -580,7 +579,7 @@ export default function App() {
             className={`tab-btn ${activeTab === 'tasks' ? 'tab-btn--active' : ''}`}
             onClick={() => setActiveTab('tasks')}
           >
-            Site log
+            Tasks
           </button>
           <button
             className={`tab-btn ${activeTab === 'contractors' ? 'tab-btn--active' : ''}`}
