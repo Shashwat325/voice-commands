@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:4000';
+const BASE_URL = 'https://voice-commands.onrender.com';
 require('dotenv').config();
 const CLOUDINARY_CLOUD_NAME = process.env.C_NAME;     // from Cloudinary dashboard
 const CLOUDINARY_UPLOAD_PRESET = process.env.preset_name;  // the unsigned preset you created
