@@ -426,5 +426,6 @@ module.exports = {
   executeSetTaskNotes,
   executeRenameProject,
   getProjectUndecidedItems,
-  getTaskUndecidedItems
+  getTaskUndecidedItems,
+  executeLogProjectExpense
 };

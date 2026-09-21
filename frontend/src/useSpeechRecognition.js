@@ -4,7 +4,7 @@ import { useState, useRef, useCallback } from 'react';
 // instead of trusting the browser's own per-phrase "isFinal" cutoff (which can
 // split sentences unpredictably), we buffer everything heard and only treat it
 // as one finished command after ~3 seconds of true silence.
-export function useSpeechRecognition({ onFinalTranscript, silenceTimeoutMs = 3000 }) {
+export function useSpeechRecognition({ onFinalTranscript, silenceTimeoutMs = 3000,language='en-IN' }) {
   const [isListening, setIsListening] = useState(false);
   const [interimText, setInterimText] = useState('');
   const [error, setError] = useState(null);
@@ -36,7 +36,7 @@ export function useSpeechRecognition({ onFinalTranscript, silenceTimeoutMs = 300
     const recognition = new SpeechRecognition();
     recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.lang = 'en-US';
+    recognition.lang = language;
 
     recognition.onstart = () => {
       setIsListening(true);
@@ -97,7 +97,7 @@ export function useSpeechRecognition({ onFinalTranscript, silenceTimeoutMs = 300
     recognitionRef.current = recognition;
     recognition.start();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [silenceTimeoutMs]);
+  }, [silenceTimeoutMs,language]);
 
   const stop = useCallback(() => {
     pausedRef.current = true;
@@ -121,7 +121,7 @@ export function useSpeechRecognition({ onFinalTranscript, silenceTimeoutMs = 300
 
 // Speaks a sentence back using the browser's built-in speech synthesis.
 // Returns a promise that resolves once speaking is finished.
-export function speak(text) {
+export function speak(text,language) {
   return new Promise(resolve => {
     if (!window.speechSynthesis || !text) {
       resolve();
@@ -130,6 +130,7 @@ export function speak(text) {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = 1.02;
+    utterance.lang=language;
     utterance.onend = () => resolve();
     utterance.onerror = () => resolve();
     window.speechSynthesis.speak(utterance);

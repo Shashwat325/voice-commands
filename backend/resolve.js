@@ -1,7 +1,12 @@
 const Fuse = require('fuse.js');
-const { data, taskWithJoins, getLastTaskId, getLastContractorId, getLastProjectId } = require('./db');
+const { data, taskWithJoins, getLastTaskId, getLastContractorId, getLastProjectId,getLastLocationId,setLastLocationId } = require('./db');
 const PRONOUN_PATTERN = /^(its|that|this|that task|this task|the task)$/i;
 const CONTRACTOR_PRONOUNS = /^(him|her|them|the contractor|that contractor|this contractor|their)$/i;
+const LOCATION_PRONOUN_PATTERN = /^(this location|that location|this area|that area|it|here)$/i;
+function resolveLocationViaPronoun(hint) {
+  if (!hint || !LOCATION_PRONOUN_PATTERN.test(hint.trim())) return null;
+  return getLastLocationId(); // last location name/id
+}
 function resolveViaPronoun(hint) {
   if (!hint || !PRONOUN_PATTERN.test(hint.trim())) return null;
   const lastId = getLastTaskId();
@@ -144,7 +149,8 @@ function resolveTaskStrict(hint) {
 // in use, optionally scoped to one project.
 function resolveLocation(hint, projectId) {
   if (!hint) return { match: null, candidates: [] };
-
+  const pronounMatch = resolveLocationViaPronoun(hint);
+  if (pronounMatch) return { match: pronounMatch, candidates: [pronounMatch] };
   let scope = data.tasks;
   if (projectId) scope = scope.filter(t => t.project_id === projectId);
   const taskLocNames = scope.map(t => t.location).filter(Boolean);

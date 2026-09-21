@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const db = require('./db');
-const { interpretCommand, generateResponse,translateText,answerFromData } = require('./aiClient');
+const { interpretCommand, generateResponse, translateText, answerFromData } = require('./aiClient');
 const {
   resolveContractor,
   resolveProject,
@@ -11,7 +11,7 @@ const {
   resolveLocation
 } = require('./resolve');
 const executor = require('./executor');
-const e = require('express');
+
 const { isPastDeadline, isOverBudget } = executor;
 
 function formatDate(iso) {
@@ -400,7 +400,7 @@ app.post('/api/voice-command', async (req, res) => {
           });
         }
         db.setLastTaskId(taskResult.match.id);
-        const message = await answerFromData(transcript,taskResult.match);
+        const message = await answerFromData(transcript, taskResult.match);
         return res.json({ type: 'progress_report', task: taskResult.match, message });
       }
 
@@ -410,7 +410,7 @@ app.post('/api/voice-command', async (req, res) => {
         const project = resolveProject(args.project_name);
         db.setLastProjectId(project.id);
         const details = executor.getProjectFullDetails(project.id);
-        const message = await answerFromData(transcript,details);
+        const message = await answerFromData(transcript, details);
         return res.json({ type: 'project_details', details, message });
       }
 
@@ -475,7 +475,7 @@ app.post('/api/voice-command', async (req, res) => {
         }
         const details = executor.getContractorDetails(contractorResult.match.id);
         db.setLastContractorId(contractorResult.match.id);  // add this line/
-        const message = await answerFromData(transcript,details);
+        const message = await answerFromData(transcript, details);
         return res.json({ type: 'contractor_details', details, message });
       }
 
@@ -487,6 +487,9 @@ app.post('/api/voice-command', async (req, res) => {
       const project = resolveProject(args.project_name);
       db.setLastProjectId(project.id);
       const locations = executor.getProjectLocationsBreakdown(project.id);
+      if (locations.length === 1) {
+        db.setLastLocationId(locations[0].location);
+      }
       const message = locations.length
         ? `${project.name} has ${locations.length} location${locations.length > 1 ? 's' : ''}: ${locations.map(l => l.location).join(', ')}.`
         : `${project.name} doesn't have any locations yet.`;
@@ -519,6 +522,9 @@ app.post('/api/voice-command', async (req, res) => {
         projectScope = { id: taskResult.match.project_id, name: taskResult.match.project_name };
         db.setLastTaskId(taskResult.match.id);
       }
+      if (!locationName && !args.task_reference) {
+        locationName = db.getLastLocationId();
+      }
 
       if (projectScope) db.setLastProjectId(projectScope.id);
       const locationResult = resolveLocation(locationName, projectScope ? projectScope.id : null);
@@ -533,15 +539,16 @@ app.post('/api/voice-command', async (req, res) => {
         });
       }
 
+      db.setLastLocationId(locationResult.match);
       const details = executor.getLocationDetails(locationResult.match, projectScope ? projectScope.id : null);
-      const message = await answerFromData(transcript,details);
+      const message = await answerFromData(transcript, details);
       return res.json({ type: 'location_details', details, message });
     }
 
     // ---------- SEARCH TASKS (read-only, execute immediately, no confirmation) ----------
     if (intent === 'search_tasks') {
       const contractorResult = resolveContractor(args.assignee_hint);
-      const project = args.project_name ? resolveProject(args.project_name) : null;
+      const project = resolveProject(args.project_name) 
       const status = normalizeStatus(args.status);
       const location = args.location || null;
       const created_on = args.assigned_on || null;
@@ -635,7 +642,7 @@ app.post('/api/voice-command', async (req, res) => {
       const project = resolveProject(args.project_name);
       db.setLastProjectId(project.id);
       const details = executor.getProjectFullDetails(project.id);
-      const message = await answerFromData(transcript,details);
+      const message = await answerFromData(transcript, details);
       return res.json({ type: 'project_details', details, message });
     }
     if (intent === 'set_project_description') {

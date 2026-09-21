@@ -44,14 +44,14 @@ async function save() {
   try {
     await client.query('BEGIN');
     for (const p of data.projects) {
-  await client.query(
-    `insert into projects (id, name, description, estimated_cost, spent_cost, completion_deadline, image_url)
+      await client.query(
+        `insert into projects (id, name, description, estimated_cost, spent_cost, completion_deadline, image_url)
      values ($1,$2,$3,$4,$5,$6,$7)
      on conflict (id) do update set
        name=$2, description=$3, estimated_cost=$4, spent_cost=$5, completion_deadline=$6, image_url=$7`,
-    [p.id, p.name, p.description, p.estimated_cost, p.spent_cost, p.completion_deadline, p.image_url || null]
-  );
-}
+        [p.id, p.name, p.description, p.estimated_cost, p.spent_cost, p.completion_deadline, p.image_url || null]
+      );
+    }
 
     for (const c of data.contractors) {
       await client.query(
@@ -63,14 +63,14 @@ async function save() {
       );
     }
     for (const img of data.images) {
-  await client.query(
-    `insert into images (id, owner_type, owner_id, url, label, created_at)
+      await client.query(
+        `insert into images (id, owner_type, owner_id, url, label, created_at)
      values ($1,$2,$3,$4,$5,$6)
      on conflict (id) do update set
        owner_type=$2, owner_id=$3, url=$4, label=$5`,
-    [img.id, img.owner_type, img.owner_id, img.url, img.label, img.created_at]
-  );
-}
+        [img.id, img.owner_type, img.owner_id, img.url, img.label, img.created_at]
+      );
+    }
     for (const t of data.tasks) {
       await client.query(
         `insert into tasks (id, project_id, description, location, status, assigned_to,
@@ -82,19 +82,19 @@ async function save() {
            estimated_cost=$7, spent_cost=$8, assigned_date=$9, completion_deadline=$10,
            updated_at=$12, completed_at=$13`,
         [t.id, t.project_id, t.description, t.location, t.status, t.assigned_to,
-         t.estimated_cost, t.spent_cost, t.assigned_date, t.completion_deadline,
-         t.created_at, t.updated_at, t.completed_at]
+        t.estimated_cost, t.spent_cost, t.assigned_date, t.completion_deadline,
+        t.created_at, t.updated_at, t.completed_at]
       );
     }
     for (const l of data.locations) {
-  await client.query(
-    `insert into locations (id, project_id, name, estimated_cost, spent_cost)
+      await client.query(
+        `insert into locations (id, project_id, name, estimated_cost, spent_cost)
      values ($1,$2,$3,$4,$5)
      on conflict (id) do update set
        name=$3, estimated_cost=$4, spent_cost=$5`,
-    [l.id, l.project_id, l.name, l.estimated_cost, l.spent_cost]
-  );
-}
+        [l.id, l.project_id, l.name, l.estimated_cost, l.spent_cost]
+      );
+    }
     await client.query('COMMIT');
   } catch (err) {
     await client.query('ROLLBACK');
@@ -147,7 +147,9 @@ function allTasksWithJoins() {
 let lastTaskId = null;
 function setLastTaskId(id) { lastTaskId = id; }
 function getLastTaskId() { return lastTaskId; }
-
+let lastLocationId=null;
+function setLastLocationId(id){lastLocationId=id};
+function getLastLocationId(){return lastLocationId};
 let lastContractorId = null;
 function setLastContractorId(id) { lastContractorId = id; }
 function getLastContractorId() { return lastContractorId; }
@@ -159,5 +161,5 @@ function getLastProjectId() { return lastProjectId; }
 module.exports = {
   data, init, save, newId, taskWithJoins, allTasksWithJoins,
   setLastTaskId, getLastTaskId, setLastContractorId, getLastContractorId,
-  setLastProjectId, getLastProjectId, findOrCreateLocation,addImage
+  setLastProjectId, getLastProjectId, findOrCreateLocation, addImage,setLastLocationId,getLastLocationId
 };

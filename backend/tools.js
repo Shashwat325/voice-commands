@@ -28,7 +28,7 @@ const tools = [
           },
           project_name: {
             anyOf: [{ type: 'string' }, { type: 'null' }],
-            description: 'The project this task belongs to, if mentioned. Leave null if not mentioned.'
+            description: 'The project this task belongs to, if a specific name was said. Leave null if not mentioned, or if the user refers to it without naming it (e.g. "this project", "the project") - the system will use whichever project is currently open.'
           },
           assignee_hint: {
             anyOf: [{ type: 'string' }, { type: 'null' }],
@@ -402,7 +402,7 @@ const tools = [
         properties: {
           location_reference: {
   anyOf: [{ type: 'string' }, { type: 'null' }],
-  description: 'The location/area by name, e.g. "kitchen". This must be null whenever a pronoun like "this task"/"it" is used instead - in that case put the pronoun in task_reference only, never here.'
+  description: 'The location/area by name, e.g. "kitchen", OR a pronoun like "this location"/"that area" if referring back to the most recently discussed location. This must be null only when the user is instead asking about the location OF A TASK (e.g. "location of this task") - in that case put the pronoun in task_reference, not here.'
 },
            task_reference: {
           anyOf: [{ type: 'string' }, { type: 'null' }],
@@ -413,7 +413,7 @@ const tools = [
             description: 'Project to scope the search to, if mentioned. Leave null to search across all projects.'
           }
         },
-        required: ['location_reference']
+        required: []
       }
     }
   },

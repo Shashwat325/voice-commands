@@ -310,6 +310,14 @@ html, body {
   border-radius: var(--radius-sm);
   padding: 16px 18px;
 }
+.lang-toggle-btn {
+  background: #F5E4E0;
+  border: 1 px solid black;
+  height: 5vh;
+  width: 5vw;
+
+  
+}
 .lang-toggle {
   background: white;
   border: 1px solid var(--line);

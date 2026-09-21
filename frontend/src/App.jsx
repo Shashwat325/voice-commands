@@ -118,7 +118,7 @@ export default function App() {
   const [projects, setProjects] = useState([]);
   const [activeTab, setActiveTab] = useState('tasks');
   const [highlightId, setHighlightId] = useState(null);
-  const PROJECT_LEVEL_ACTIONS = ['create_project', 'set_project_budget', 'set_project_description', 'set_project_deadline'];
+  const PROJECT_LEVEL_ACTIONS = ['create_project', 'set_project_budget', 'set_project_description', 'set_project_deadline','set_project_other_costs'];
 
   const modeRef = useRef('off');
   const setMode = m => {
@@ -143,7 +143,7 @@ export default function App() {
   }, [loadTasks]);
 
   const { isListening, interimText, error, supported, start, stop, pauseForSpeech, resumeAfterSpeech } =
-    useSpeechRecognition({ onFinalTranscript: text => handleFinalTranscriptRef.current(text) });
+    useSpeechRecognition({ onFinalTranscript: text => handleFinalTranscriptRef.current(text), language: language==='hi-IN' ?'hi-IN':'en-IN' });
 
   // Pauses the mic, speaks a line, then resumes listening in the given mode.
   const speakThen = useCallback(
@@ -558,8 +558,22 @@ export default function App() {
         <p className="app__eyebrow">Voice-to-Command · Project Assistant</p>
         <h1 className="app__title">Talk to your project.</h1>
       </header>
+      <button
+  className="lang-toggle-btn"
+  onClick={() => {  
+    const newlang=language==='hi-IN'?'en-IN':'hi-IN';
+    setLanguage(newlang);
+    if(mode!='off'){
+      stop();
+      setTimeout(()=>start(),350);
+    }
+  }}
+>
+  {language === 'en-IN' ? 'EN' : 'हिं'}
+</button>
 
       <section className="voice-panel">
+        
         <MicButton mode={mode} disabled={!supported} onClick={toggleVoiceMode} />
         <p className="voice-panel__hint">
           {!supported ? 'Voice input needs Chrome or Edge.' : error ? `Mic error: ${error}` : MODE_HINTS[mode]}
