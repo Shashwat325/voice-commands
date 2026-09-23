@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:4000'||'https://voice-commands.onrender.com';
+const BASE_URL ='https://voice-commands.onrender.com';
 const CLOUDINARY_CLOUD_NAME = 'daf5k1guv';  // from Cloudinary dashboard
 const CLOUDINARY_UPLOAD_PRESET = 'voice commands';  // the unsigned preset you created
 
